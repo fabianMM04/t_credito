@@ -1,3 +1,6 @@
 from django.db import models
 
-# Create your models here.
+class Franquicia(models.Model):
+    nombre = models.CharField(max_length=50)
+    cantidad_numero = models.IntegerField(default=0)
+    numero_inicial = models.IntegerField()
