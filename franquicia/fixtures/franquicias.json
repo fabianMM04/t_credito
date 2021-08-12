@@ -1,0 +1,36 @@
+[{
+    "model": "franquicia.Franquicia",
+    "pk": 1,
+    "fields": {
+        "nombre": "Visa",
+        "cantidad_numero": 16,
+        "numero_inicial": 4
+    }
+},
+{
+    "model": "franquicia.Franquicia",
+    "pk": 2,
+    "fields": {
+        "nombre": "Mastercard",
+        "cantidad_numero": 16,
+        "numero_inicial": 5
+    }
+},
+{
+    "model": "franquicia.Franquicia",
+    "pk": 3,
+    "fields": {
+        "nombre": "Amex",
+        "cantidad_numero": 15,
+        "numero_inicial": 3
+    }
+},
+{
+    "model": "franquicia.Franquicia",
+    "pk": 4,
+    "fields": {
+        "nombre": "Diners Club",
+        "cantidad_numero": 14,
+        "numero_inicial": 3
+    }
+}]

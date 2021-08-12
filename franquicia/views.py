@@ -2,7 +2,6 @@ from os import stat
 from django.db import reset_queries
 from django.db.models import query
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -21,8 +20,9 @@ def verificar_tc(request):
     request: 
     - numero: contiene el numero de la tarjeta de credito.
 
-    POST: Recibe el numero de la tarjeta de credito y 
-    retorna el nombre de la franquicia o invalido si esta mal ingresado
+    Metodo POST: Recibe el campo numero de la tarjeta de credito y
+    lo verifica con las franquicias guardadas si es valido
+    retorna el nombre de la franquicia sino muestra mensaje de errores
     """
     try:      
         json_object = JSONParser().parse(request)
@@ -35,7 +35,7 @@ def verificar_tc(request):
                 franquicia = Franquicia.objects.get(cantidad_numero=cantidad_numero, numero_inicial=numero_inicial)
                 return JsonResponse({"nombre": franquicia.nombre}, status=status.HTTP_200_OK)
             except:
-                return JsonResponse({"message": "Fallo comuniquese con el administrador del sistema"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return JsonResponse({"message": "franquicia no existe"}, status=status.HTTP_404_NOT_FOUND)
 
         return JsonResponse({"message": "Numero de la tarjeta invalido"}, status=status.HTTP_400_BAD_REQUEST)
     except:
@@ -65,7 +65,7 @@ def franquicia_list_create(request):
             if franquicias_serializer.is_valid():
                 franquicias_serializer.save()
                 return JsonResponse({"message": "Agregado exitosamente"}, status=status.HTTP_201_CREATED)
-            return JsonResponse({"message":"Fallo en agregar franquicia"}, status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({"message":"Fallo en agregar franquicia"}, status=status.HTTP_400_BAD_REQUEST)
         except:
             return JsonResponse({"message": "Fallo comuniquese con el administrador del sistema"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
