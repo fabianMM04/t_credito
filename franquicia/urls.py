@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import franquiciaAPI, verificar_tc, franquicia_detail, franquicia_list_create
+from .views import  verificar_tc, franquicia_detail, franquicia_list_create
 
 
 urlpatterns = [
