@@ -69,4 +69,22 @@ class FranquiciaTest(TestCase):
         self.assertEqual(response.status_code, 204)
         self.assertEqual(len(Franquicia.objects.all()), 3) 
 
-    
+    def test_verify_franquicia_name_not_found(self):
+        response = self.client.post('/api/v1/verificar', data={"numero": "331 231 312 312 123 111"}, content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        
+    def test_verify_franquicia_name_found(self):
+        response = self.client.post('/api/v1/verificar', data={"numero": "331 231 312 312 123"}, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        expected = {'nombre': 'Amex'}
+        actual_value = response.json()
+        self.assertEqual(actual_value['nombre'], expected['nombre'])
+
+    def test_verify_franquicia_name_invalid_request(self):
+        response = self.client.post('/api/v1/verificar', data={"otro": "331 231 312 312 123"}, content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+
+    def test_verify_franquicia_name_is_not_numeric(self):
+        response = self.client.post('/api/v1/verificar', data={"otro": "331 231 312 A12 123"}, content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+       
